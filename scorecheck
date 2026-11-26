@@ -7,4 +7,12 @@ for line in sys.stdin:
     score = float(line.strip())
     scores.append(score)
 
-print(scores)
+count = len(scores)
+average = sum(scores) / count
+highest = max(scores)
+lowest = min(scores)
+
+print(f"受験者数: {count}人")
+print(f"平均点: {average:.1f}点")
+print(f"最高点: {highest:.1f}点")
+print(f"最低点: {lowest:.1f}点")
