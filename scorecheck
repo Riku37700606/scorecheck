@@ -12,7 +12,21 @@ average = sum(scores) / count
 highest = max(scores)
 lowest = min(scores)
 
+threshold = 60
+passed = 0
+
+for score in scores:
+    if score >= threshold:
+        passed += 1
+
+failed = count - passed
+pass_rate = passed / count * 100
+
 print(f"受験者数: {count}人")
 print(f"平均点: {average:.1f}点")
 print(f"最高点: {highest:.1f}点")
 print(f"最低点: {lowest:.1f}点")
+print(f"合格基準: {threshold}点")
+print(f"合格者数: {passed}人")
+print(f"不合格者数: {failed}人")
+print(f"合格率: {pass_rate:.1f}%")
