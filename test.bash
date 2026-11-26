@@ -1,6 +1,7 @@
 #!/bin/bash
 # SPDX-FileCopyrightText: 2026 Riku37700606
 # SPDX-License-Identifier: BSD-3-Clause
+
 ng () {
     echo "${1}行目のテスト失敗"
     res=1
@@ -12,53 +13,53 @@ res=0
 
 out=$(printf "80\n45\n90\n60\n55\n" | ./scorecheck)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "受験者数: 5人" || ng "$LINENO"
-echo "$out" | grep -qx "平均点: 66.0点" || ng "$LINENO"
-echo "$out" | grep -qx "最高点: 90.0点" || ng "$LINENO"
-echo "$out" | grep -qx "最低点: 45.0点" || ng "$LINENO"
-echo "$out" | grep -qx "合格基準: 60点" || ng "$LINENO"
-echo "$out" | grep -qx "合格者数: 3人" || ng "$LINENO"
-echo "$out" | grep -qx "不合格者数: 2人" || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 60.0%" || ng "$LINENO"
+echo "$out" | grep -Fqx "count,5" || ng "$LINENO"
+echo "$out" | grep -Fqx "average,66.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "max,90.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "min,45.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "threshold,60" || ng "$LINENO"
+echo "$out" | grep -Fqx "passed,3" || ng "$LINENO"
+echo "$out" | grep -Fqx "failed,2" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,60.0" || ng "$LINENO"
 
 ### CUSTOM THRESHOLD ###
 
 out=$(printf "80\n45\n90\n60\n55\n" | ./scorecheck 80)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "合格基準: 80点" || ng "$LINENO"
-echo "$out" | grep -qx "合格者数: 2人" || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 40.0%" || ng "$LINENO"
+echo "$out" | grep -Fqx "threshold,80" || ng "$LINENO"
+echo "$out" | grep -Fqx "passed,2" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,40.0" || ng "$LINENO"
 
 ### ALL PASSED ###
 
 out=$(printf "60\n70\n80\n90\n100\n" | ./scorecheck)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 100.0%" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,100.0" || ng "$LINENO"
 
 ### ALL FAILED ###
 
 out=$(printf "10\n20\n30\n40\n50\n" | ./scorecheck)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 0.0%" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,0.0" || ng "$LINENO"
 
 ### DECIMAL INPUT ###
 
 out=$(printf "70.5\n59.5\n80\n" | ./scorecheck)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "平均点: 70.0点" || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 66.7%" || ng "$LINENO"
+echo "$out" | grep -Fqx "average,70.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,66.7" || ng "$LINENO"
 
 ### BOUNDARY VALUES ###
 
 out=$(printf "0\n59\n60\n100\n" | ./scorecheck)
 [ "$?" = 0 ] || ng "$LINENO"
-echo "$out" | grep -qx "最低点: 0.0点" || ng "$LINENO"
-echo "$out" | grep -qx "最高点: 100.0点" || ng "$LINENO"
-echo "$out" | grep -qx "合格率: 50.0%" || ng "$LINENO"
+echo "$out" | grep -Fqx "min,0.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "max,100.0" || ng "$LINENO"
+echo "$out" | grep -Fqx "pass_rate,50.0" || ng "$LINENO"
 
 ### INVALID INPUT ###
 
-err=$(mktemp)
+err=$(mktemp) || exit 1
 trap 'rm -f "$err"' EXIT
 
 out=$(echo あ | ./scorecheck 2>"$err")
