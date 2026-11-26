@@ -138,7 +138,19 @@ Pythonの外部ライブラリは必要ありません。
 
 ## テスト環境
 
-- Ubuntu 24.04.5 LTS（ローカル環境）
+### ローカル環境
+
+- Ubuntu 24.04.5 LTS
+- Python 3.12.3
+
+### GitHub Actions
+
+- Ubuntu 24.04
+- Python 3.10
+- Python 3.11
+- Python 3.12
+- Python 3.13
+- Python 3.14
 
 ## テスト方法
 
@@ -146,6 +158,14 @@ Pythonの外部ライブラリは必要ありません。
 $ bash test.bash
 OK
 ```
+
+## 参考資料・謝辞
+
+テストスクリプトとGitHub Actionsの設定には、
+ロボットシステム学2026の講義資料を参考にしました。
+
+- [ロボットシステム学2026 第6回](https://tarolab-cit.github.io/lectures/robosys2026/lecture06.html)
+- [ロボットシステム学2026 第7回](https://tarolab-cit.github.io/lectures/robosys2026/lecture07.html)
 
 ## ライセンス
 
