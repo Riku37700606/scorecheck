@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# SPDX-FileCopyrightText: 2026 Riku37700606
+# SPDX-License-Identifier: BSD-3-Clause
 ng () {
     echo "${1}行目のテスト失敗"
     res=1
