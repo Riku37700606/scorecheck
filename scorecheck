@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+import sys
+
+scores = []
+
+for line in sys.stdin:
+    score = float(line.strip())
+    scores.append(score)
+
+print(scores)
